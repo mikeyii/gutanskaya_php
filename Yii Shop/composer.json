@@ -1,0 +1,13 @@
+{
+    "name": "mike/framework",
+    "require": {
+        "altorouter/altorouter": "~1.1",
+        "wixel/gump": "~1.1"
+    },
+    "authors": [
+        {
+            "name": "Mike Yii",
+            "email": "yii@yandex.ru"
+        }
+    ]
+}
