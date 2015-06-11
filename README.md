@@ -1,1 +1,0 @@
-# gutanskaya_php
