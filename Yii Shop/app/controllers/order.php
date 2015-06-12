@@ -26,4 +26,15 @@ class Order extends Controller
 		$this->view->render('order/go');
 	}
 
+	function send_order()
+	{
+		$err = $this->model->send_ord();
+		if (!$err) {
+			header('Refresh: 10; url=/');
+			$this->view->render('order/success');
+		} else {
+			$this->view->render('order/go',['err'=>$err]);
+		}
+	}
+
 }

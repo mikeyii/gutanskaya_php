@@ -24,6 +24,7 @@ class Order_model extends Model
 		}
 		return $gds;
 	}
+
 	function del($del_ord)
 	{
 		$del_ord = unserialize($del_ord);
@@ -37,5 +38,35 @@ class Order_model extends Model
 				}
 			}
 		}
+	}
+
+	function send_ord() {
+		
+		if ( !preg_match("/\\d\\-\\d\\d\\d\\-\\d\\d\\d\\-\\d\\d\\-\\d\\d/", $_POST['tel']) )
+			return '<div class="alert alert-danger">Телефон должен быт указанного формата</div>';
+
+		$sum = 0;
+		foreach ($_SESSION['order'] as $ord) {
+			if (!empty($ord)) {
+
+				$this->db->where('id', $ord['id']);
+				$gd = $this->db->getOne('gds');
+				$price = $gd['price'];
+
+				$sum += $price * $ord['count'];
+			}
+			
+		}
+
+		$data = [
+			'tel' => $_POST['tel'],
+			'gds_data' => serialize($_SESSION['order']),
+			'sum' => $sum,
+			'date' => $this->db->now()
+		];
+
+		$id = $this->db->insert('orders', $data);
+		if(!$id)
+			return 'Ошибка добавления данных в бд';
 	}
 }
